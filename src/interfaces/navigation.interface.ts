@@ -1,0 +1,3 @@
+interface INavigation {
+    navigation: NavigationProp;
+}
