@@ -1,51 +1,56 @@
-import { ReactNode } from 'react';
-import { Controller, useForm } from 'react-hook-form';
-import { HelperText, TextInput } from 'react-native-paper';
+import { MaterialIcons } from '@expo/vector-icons';
+import { FormControl, Icon, Input, Pressable } from 'native-base';
+import { useState } from 'react';
 
 interface InputPasswordProps {
    label: string;
    placeholder: string;
    value: string;
    setValue: (text: string) => void;
+   isRequired?: boolean;
 }
 
-export default function InputPassword({
+export default function InputPasswordTest({
    label,
    placeholder,
    value,
    setValue,
-}: InputPasswordProps): ReactNode {
-   const { control } = useForm({ mode: 'onChange' });
+   isRequired = false,
+}: InputPasswordProps) {
+   const [show, setShow] = useState(false);
 
    return (
-      <Controller
-         control={control}
-         render={({ field: { onChange, onBlur, value } }) => (
-            <>
-               <TextInput
-                  label={label}
-                  value={value}
-                  placeholder={placeholder}
-                  onBlur={onBlur}
-                  onChangeText={(text) => setValue(text)}
-                  secureTextEntry
-                  mode="outlined"
-                  theme={{ roundness: 50, mode: 'adaptive' }}
-                  style={{ width: '100%' }}
-                  right={
-                     <TextInput.Icon
-                        icon={value === '' ? 'eye-off' : 'eye'}
-                        onPress={() => setValue(value === '' ? value : '')}
-                     />
-                  }
-               />
-               <HelperText type="error">
-                  {value === '' ? 'This field is required' : ''}
-               </HelperText>
-            </>
-         )}
-         name={label}
-         rules={{ required: true }}
-      />
+      <FormControl isRequired={isRequired}>
+         <FormControl.Label
+            _text={{
+               fontSize: 'lg',
+               color: 'coolGray.800',
+            }}
+         >
+            {label}
+         </FormControl.Label>
+         <Input
+            type={show ? 'text' : 'password'}
+            placeholder={placeholder}
+            value={value}
+            onChangeText={(text) => setValue(String(text))}
+            variant={'rounded'}
+            size={'2xl'}
+            InputRightElement={
+               <Pressable onPress={() => setShow(!show)}>
+                  <Icon
+                     as={
+                        <MaterialIcons
+                           name={show ? 'visibility' : 'visibility-off'}
+                        />
+                     }
+                     size={8}
+                     mr="2"
+                     color="muted.400"
+                  />
+               </Pressable>
+            }
+         />
+      </FormControl>
    );
 }

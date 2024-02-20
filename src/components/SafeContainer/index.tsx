@@ -1,6 +1,5 @@
 import { ReactNode } from 'react';
-import { StyleSheet } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { ScrollView, StyleSheet } from 'react-native';
 
 interface SafeContainerProps {
    children: React.ReactNode;
@@ -9,15 +8,23 @@ interface SafeContainerProps {
 export default function SafeContainer({
    children,
 }: SafeContainerProps): ReactNode {
-   return <SafeAreaView style={styles.container}>{children}</SafeAreaView>;
+   return (
+      <ScrollView key={'scrollview'} keyboardShouldPersistTaps="handled">
+         {children}
+      </ScrollView>
+   );
 }
 
 const styles = StyleSheet.create({
    container: {
       flex: 1,
-      backgroundColor: '#fff',
-      justifyContent: 'center', // aligns children along the vertical axis
-      alignItems: 'center', // aligns children along the horizontal axis
-      padding: 20,
+      backgroundColor: 'red',
+      borderStartColor: 'blue',
+      paddingLeft: 20,
+      paddingRight: 20,
+      paddingTop: 0,
+   },
+   scrollView: {
+      flex: 1,
    },
 });

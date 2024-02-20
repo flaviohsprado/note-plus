@@ -10,7 +10,7 @@ interface IResponseParams {
 }
 
 export const api = axios.create({
-    baseURL: 'https://c31c-138-117-164-212.ngrok-free.app/',
+    baseURL: 'https://ade5-138-117-164-212.ngrok-free.app/',
     headers: {
         'Content-Type': 'application/json',
         'Access-Control-Allow-Origin': '*',

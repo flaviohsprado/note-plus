@@ -1,32 +1,42 @@
-import { useNavigation } from '@react-navigation/native';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
-import { useUserStore } from 'hooks/useUserStore';
 import { ICustomError } from 'interfaces/customError.interface';
+import { IDocumentPickerFile } from 'interfaces/file.interface';
 import { IUserSignupResponse } from 'interfaces/user.interface';
+import { useToast } from 'native-base';
 import { useState } from 'react';
-import { useToast } from 'react-native-paper-toast';
 import { api } from 'services/Axios';
 import StorageUtils from 'utils/storage.utils';
 
 export const useSignup = () => {
-   const navigation = useNavigation();
    const toaster = useToast();
-   const { setUser } = useUserStore();
+   const queryClient = useQueryClient();
 
    const [username, setUsername] = useState('');
    const [password, setPassword] = useState('');
    const [confirmPassword, setConfirmPassword] = useState('');
    const [email, setEmail] = useState('');
+   const [file, setFile] = useState<IDocumentPickerFile>();
 
    const { mutate } = useMutation<IUserSignupResponse, AxiosError<ICustomError>>({
       mutationFn: async () => {
-         console.log('url', api.defaults.baseURL);
+         const formData = new FormData();
 
-         const { data } = await api.post<IUserSignupResponse>('/users', {
-            email,
-            username,
-            password,
+         if (file)
+            formData.append('file', {
+               uri: file?.uri,
+               name: file?.name,
+               type: file?.mimeType,
+            });
+
+         formData.append('username', username);
+         formData.append('email', email);
+         formData.append('password', password);
+
+         const { data } = await api.post<IUserSignupResponse>('/users', formData, {
+            headers: {
+               'Content-Type': 'multipart/form-data',
+            },
          });
 
          return data;
@@ -34,22 +44,12 @@ export const useSignup = () => {
       onSuccess: (data) => {
          StorageUtils.set('accessToken', data.accessToken);
 
-         setUser({
-            id: data.id,
-            name: data.username,
-            email: data.email,
-            avatar: data.file.url,
-         });
-
-         //@ts-ignore
-         navigation.navigate('Home');
+         queryClient.setQueryData(['user'], data);
       },
       onError: (error) => {
-         console.log('error', JSON.stringify(error));
          toaster.show({
-            type: 'error',
-            message:
-               'Error on signup - ' + String(JSON.stringify(error)),
+            title: "Something went wrong",
+            description: String(error.response?.data?.message),
             duration: 3000,
          });
       },
@@ -58,8 +58,8 @@ export const useSignup = () => {
    const handleSubmit = () => {
       if (!username || !email || !password || !confirmPassword) {
          toaster.show({
-            type: 'warning',
-            message: 'All fields are required',
+            title: "Something went wrong",
+            description: 'All fields are required',
             duration: 3000,
          });
 
@@ -68,8 +68,8 @@ export const useSignup = () => {
 
       if (password !== confirmPassword) {
          toaster.show({
-            type: 'warning',
-            message: 'Password and confirm password are different',
+            title: "Something went wrong",
+            description: 'Password and confirm password do not match',
             duration: 3000,
          });
 
@@ -88,6 +88,7 @@ export const useSignup = () => {
       setPassword,
       confirmPassword,
       setConfirmPassword,
+      setFile,
       handleSubmit,
    };
 };
