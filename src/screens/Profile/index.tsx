@@ -1,4 +1,4 @@
-import SafeContainer from 'components/SafeContainer';
+import SafeContainer from 'components/global/SafeContainer';
 import { useGetUser } from 'hooks/user/useGetUser';
 import { useSignup } from 'hooks/user/useSignup';
 import { View } from 'react-native';

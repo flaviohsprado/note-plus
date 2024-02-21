@@ -1,5 +1,5 @@
 import InputText from 'components/InputText';
-import SubmitButton from 'components/SubmitButton';
+import SubmitButton from 'components/global/SubmitButton';
 import { useCreateDeck } from 'hooks/deck/useCreateDeck';
 import { Center, Modal } from 'native-base';
 
