@@ -29,7 +29,6 @@ export default function InputText({
             placeholder={placeholder}
             value={value}
             onChangeText={(text) => setValue(text)}
-            onEndEditing={() => setValue(value)}
             variant={'rounded'}
             size={'2xl'}
          />

@@ -1,4 +1,6 @@
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import {
    AuthenticatedUserStack,
@@ -10,6 +12,8 @@ import { NativeBaseProvider } from 'native-base';
 import { DefaultTheme, Provider as PaperProvider } from 'react-native-paper';
 
 const queryClient = new QueryClient();
+const Tab = createBottomTabNavigator();
+const Stack = createStackNavigator();
 
 export default function App() {
    return (

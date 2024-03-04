@@ -10,11 +10,15 @@ export const useCreateDeck = () => {
    const toaster = useToast();
    const queryClient = useQueryClient();
 
+   const [parentId, setParentId] = useState('');
    const [name, setName] = useState('');
 
    const { mutate } = useMutation<IDeck, AxiosError<ICustomError>>({
       mutationFn: async () => {
-         const { data } = await api.post<IDeck>('/categories', { name });
+         const { data } = await api.post<IDeck>('/categories', {
+            parentId,
+            name
+         });
 
          return data;
       },
@@ -55,6 +59,7 @@ export const useCreateDeck = () => {
    return {
       name,
       setName,
+      setParentId,
       handleSubmit,
    };
 }

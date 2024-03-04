@@ -11,10 +11,9 @@ export const useDeleteDeck = (ids: string[]) => {
 
    const { mutate } = useMutation<void, AxiosError<ICustomError>>({
       mutationFn: async () => {
-         console.log('Ids', ids);
-         await Promise.all(
-            ids.map(async (id) => api.delete<IDeck>('/categories', { params: { id } }))
-         );
+         ids.map(async (id) => {
+            await api.delete<IDeck>(`/categories/${id}`)
+         })
       },
       onSuccess: (data) => {
          toaster.show({

@@ -18,8 +18,6 @@ export default function ProfileScreen() {
       handleSubmit,
    } = useSignup();
 
-   console.log('user', user);
-
    return (
       <SafeContainer>
          <View></View>

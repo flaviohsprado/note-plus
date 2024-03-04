@@ -10,16 +10,16 @@ export const useUpdateDeck = (id: string) => {
    const toaster = useToast();
    const queryClient = useQueryClient();
 
-   const [name, setName] = useState('');
+   const [updatedName, setUpdatedName] = useState('');
 
    const { mutate } = useMutation<IDeck, AxiosError<ICustomError>>({
       mutationFn: async () => {
-         const { data } = await api.put<IDeck>(`/categories/${id}`, { name });
+         const { data } = await api.put<IDeck>(`/categories/${id}`, { name: updatedName });
 
          return data;
       },
       onSuccess: (data) => {
-         setName('');
+         setUpdatedName('');
 
          toaster.show({
             title: "Deck updated",
@@ -39,7 +39,7 @@ export const useUpdateDeck = (id: string) => {
    });
 
    const handleUpdate = () => {
-      if (!name) {
+      if (!updatedName) {
          toaster.show({
             title: "Something went wrong",
             description: 'All fields are required',
@@ -53,8 +53,8 @@ export const useUpdateDeck = (id: string) => {
    };
 
    return {
-      name,
-      setName,
+      updatedName,
+      setUpdatedName,
       handleUpdate,
    };
 }

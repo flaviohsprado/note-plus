@@ -1,8 +1,15 @@
 import { MaterialIcons } from '@expo/vector-icons';
 import { IDeck } from 'interfaces/deck.interface';
-import { Box, Checkbox, Flex, Icon, Spacer, Text } from 'native-base';
+import {
+   Box,
+   Checkbox,
+   Flex,
+   Icon,
+   Pressable,
+   Spacer,
+   Text,
+} from 'native-base';
 import React from 'react';
-import { Pressable } from 'react-native';
 
 interface ItemListProps {
    deck: IDeck;
@@ -38,7 +45,7 @@ export default function ItemList({
                flexDirection="row"
                alignItems="center"
                padding={5}
-               backgroundColor="#F5F5F5"
+               backgroundColor="#f5f5f5"
                shadow={1}
             >
                {onSelectMode && (

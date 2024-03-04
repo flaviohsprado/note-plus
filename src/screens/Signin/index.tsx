@@ -1,7 +1,7 @@
 import SigninBottom from 'components/Authentication/SigninBottom';
 import SignInHeader from 'components/Authentication/SigninHeader';
 import InputPasswordTest from 'components/global/InputPassword';
-import InputText from 'components/InputText';
+import InputText from 'components/global/InputText';
 import SafeContainer from 'components/global/SafeContainer';
 import SubmitButton from 'components/global/SubmitButton';
 import { useAuth } from 'hooks/authentication/useAuth';

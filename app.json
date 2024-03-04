@@ -17,6 +17,12 @@
         {
           "iCloudContainerEnvironment": "Production"
         }
+      ],
+      [
+        "expo-font",
+        {
+          "fonts": ["./assets/fonts/Rubik-Black.ttf", "./assets/fonts/Rubik-Bold.ttf", "./assets/fonts/Rubik-Light.ttf", "./assets/fonts/Rubik-Medium.ttf", "./assets/fonts/Rubik-Regular.ttf", "./assets/fonts/Rubik-SemiBold.ttf"]
+        }
       ]
     ],
     "assetBundlePatterns": [

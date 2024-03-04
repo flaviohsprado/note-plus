@@ -1,9 +1,9 @@
 import { useNavigation } from '@react-navigation/native';
+import { useQueryClient } from '@tanstack/react-query';
 import { useDeleteDeck } from 'hooks/deck/useDeleteDeck';
 import { IDeck } from 'interfaces/deck.interface';
-import { List } from 'native-base';
 import { useState } from 'react';
-import { FlatList } from 'react-native';
+import { FlatList, SafeAreaView } from 'react-native';
 import ActionButtons from '../ActionButtons';
 import ItemList from '../Item';
 
@@ -20,7 +20,15 @@ export default function VerticalDeckList({
    const [isSelectionMode, setIsSelectionMode] = useState(false);
    const [selectedItems, setSelectedItems] = useState<string[]>([]);
    const { handleDelete } = useDeleteDeck(selectedItems);
+   const [refreshing, setRefreshing] = useState(false);
+   const queryClient = useQueryClient();
    const navigation = useNavigation();
+
+   const onRefresh = () => {
+      setRefreshing(true);
+      queryClient.refetchQueries({ queryKey: ['decks'] });
+      setRefreshing(false);
+   };
 
    const handleCancelAction = () => {
       setIsSelectionMode(false);
@@ -51,15 +59,18 @@ export default function VerticalDeckList({
             }
          });
       } else {
-         //navigation?.navigate('DeckScreen', { id });
+         console.log('VerticalDeckList', id);
+         navigation.navigate('DeckScreen', { id, parentName: '' });
       }
    };
 
    return (
-      <List borderTopWidth={0} borderBottomWidth={0} style={{ flex: 1 }}>
+      <SafeAreaView style={{ flex: 1 }}>
          <FlatList
             horizontal={false}
             data={decks}
+            refreshing={refreshing}
+            onRefresh={onRefresh}
             renderItem={({ item }) => (
                <ItemList
                   key={item.id}
@@ -77,6 +88,6 @@ export default function VerticalDeckList({
             handleCancel={handleCancelAction}
             show={isSelectionMode}
          />
-      </List>
+      </SafeAreaView>
    );
 }

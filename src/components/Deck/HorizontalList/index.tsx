@@ -1,22 +1,26 @@
 import { useNavigation } from '@react-navigation/native';
 import { useDeleteDeck } from 'hooks/deck/useDeleteDeck';
 import { IDeck } from 'interfaces/deck.interface';
-import { List } from 'native-base';
+import { Box, Text } from 'native-base';
 import { useState } from 'react';
 import { FlatList } from 'react-native';
 import ActionButtons from '../ActionButtons';
 import ItemList from '../Item';
+import HorizontalDeckListSkeleton from './skeleton';
 
-interface ExampleProps {
+interface HorizontalDeckList {
    decks: IDeck[];
    setInSelectionMode: (value: boolean) => void;
-   navigation?: NavigationProp;
+   isLoading?: boolean;
+   parentName?: string;
 }
 
-export default function HorizontalDeckList({
+export default function HorizontalCategoryList({
    decks,
    setInSelectionMode,
-}: ExampleProps) {
+   isLoading,
+   parentName,
+}: HorizontalDeckList) {
    const [isSelectionMode, setIsSelectionMode] = useState(false);
    const [selectedItems, setSelectedItems] = useState<string[]>([]);
    const { handleDelete } = useDeleteDeck(selectedItems);
@@ -51,12 +55,21 @@ export default function HorizontalDeckList({
             }
          });
       } else {
-         //navigation?.navigate('DeckScreen', { id });
+         navigation.navigate('DeckScreen', {
+            id,
+            parentName: parentName || '',
+         });
       }
    };
 
-   return (
-      <List borderTopWidth={0} borderBottomWidth={0} style={{ flex: 1 }}>
+   return isLoading ? (
+      <HorizontalDeckListSkeleton />
+   ) : decks.length === 0 ? (
+      <Box flex={1} justifyContent="center" alignItems="center">
+         <Text>No decks found, create one for this category</Text>
+      </Box>
+   ) : (
+      <>
          <FlatList
             horizontal={true}
             data={decks}
@@ -77,6 +90,6 @@ export default function HorizontalDeckList({
             handleCancel={handleCancelAction}
             show={isSelectionMode}
          />
-      </List>
+      </>
    );
 }

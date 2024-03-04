@@ -4,7 +4,7 @@ export default function SignInHeader() {
    return (
       <Box padding={5}>
          <Heading
-            size="lg"
+            size="2xl"
             fontWeight="600"
             color="coolGray.800"
             _dark={{
@@ -20,7 +20,7 @@ export default function SignInHeader() {
             }}
             color="coolGray.600"
             fontWeight="medium"
-            size="xs"
+            size="md"
          >
             Faça login para continuar
          </Heading>

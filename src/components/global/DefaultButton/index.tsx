@@ -1,10 +1,10 @@
-import { Button } from "react-native-paper";
+import { Button } from 'native-base';
 
 interface DefaultButtonProps {
-  label: string;
-  props: any;
+   label: string;
+   props: any;
 }
 
 export default function DefaultButton({ label, props }: DefaultButtonProps) {
-  return <Button {...props}>{label}</Button>;
+   return <Button {...props}>{label}</Button>;
 }

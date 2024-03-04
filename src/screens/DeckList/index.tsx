@@ -1,58 +1,39 @@
+import { MaterialIcons } from '@expo/vector-icons';
 import CreateDeck from 'components/Deck/Create';
 import VerticalDeckList from 'components/Deck/VerticalList';
 import { useFindAllDecks } from 'hooks/deck/useFindAllDecks';
+import { IDeck } from 'interfaces/deck.interface';
+import { Fab, Icon } from 'native-base';
 import { ReactNode, useState } from 'react';
-import { FAB } from 'react-native-paper';
+import DeckListSkeleton from './skeleton';
 
-interface DeckListProps {
-   navigation: INavigation;
-}
-
-export default function DeckListScreen({
-   navigation,
-}: DeckListProps): ReactNode {
+export default function DeckListScreen(): ReactNode {
    const { decks, isLoading } = useFindAllDecks();
    const [state, setState] = useState({ open: false });
    const [visible, setVisible] = useState(false);
    const [inSelectionMode, setInSelectionMode] = useState(false);
 
-   const onStateChange = ({ open }: any) => setState({ open });
-
-   const { open } = state;
-
-   return (
+   return isLoading ? (
+      <DeckListSkeleton />
+   ) : (
       <>
          {decks && (
             <VerticalDeckList
-               decks={decks}
+               decks={decks as IDeck[]}
                setInSelectionMode={setInSelectionMode}
             />
          )}
          <CreateDeck visible={visible} setVisible={setVisible} />
-         <FAB.Group
-            visible={!isLoading}
-            open={open}
-            icon={open ? 'minus' : 'plus'}
-            style={{
-               position: 'absolute',
-               margin: 16,
-               right: 0,
-               bottom: 60,
-               display: inSelectionMode ? 'none' : 'flex',
-            }}
-            actions={[
-               {
-                  icon: 'note-plus',
-                  label: 'Create Notes',
-                  onPress: () => console.log('Create Notes pressed'),
-               },
-               {
-                  icon: 'folder-plus',
-                  label: 'Create Deck',
-                  onPress: () => setVisible(true),
-               },
-            ]}
-            onStateChange={onStateChange}
+         <Fab
+            renderInPortal={false}
+            shadow={2}
+            size="md"
+            icon={
+               <Icon color="white" as={MaterialIcons} name="add" size="xl" />
+            }
+            onPress={() => setVisible(true)}
+            colorScheme={'emerald'}
+            bottom={200}
          />
       </>
    );

@@ -2,13 +2,22 @@ import { MaterialIcons } from '@expo/vector-icons';
 import { useUpdateDeck } from 'hooks/deck/useUpdateDeck';
 import { Flex, IconButton, Input, Text, View } from 'native-base';
 import { useState } from 'react';
+import DeckHeaderSkeleton from './skeleton';
 
 interface DeckHeaderProps {
    id: string;
+   parentName: string;
+   name: string;
+   isLoading?: boolean;
 }
 
-export default function DeckHeader({ id }: DeckHeaderProps) {
-   const { name, setName, handleUpdate } = useUpdateDeck(id);
+export default function DeckHeader({
+   id,
+   name,
+   parentName,
+   isLoading,
+}: DeckHeaderProps) {
+   const { updatedName, setUpdatedName, handleUpdate } = useUpdateDeck(id);
    const [isEditing, setIsEditing] = useState(false);
 
    const handleEdit = () => {
@@ -19,12 +28,14 @@ export default function DeckHeader({ id }: DeckHeaderProps) {
       setIsEditing(false);
    };
 
-   const parent = {
-      id: '212da430-0ca9-4b65-937b-8494e96fcd9c',
-      name: 'Deck',
+   const handleUpdateCategory = () => {
+      handleUpdate();
+      setIsEditing(false);
    };
 
-   return (
+   return isLoading ? (
+      <DeckHeaderSkeleton />
+   ) : (
       <View margin={4}>
          <Flex
             direction="row"
@@ -32,10 +43,15 @@ export default function DeckHeader({ id }: DeckHeaderProps) {
             justifyContent={'space-between'}
          >
             <Flex direction="row" alignItems="center" width={'50%'}>
-               <Text fontSize={25} fontWeight="bold">
-                  {parent && `${parent.name} `}
+               <Text
+                  fontSize={25}
+                  fontFamily={'heading'}
+                  fontWeight="600"
+                  fontStyle={'normal'}
+               >
+                  {parentName.length > 0 && `${parentName} `}
                </Text>
-               {parent && (
+               {parentName.length > 0 && (
                   <MaterialIcons
                      name="arrow-forward-ios"
                      size={25}
@@ -47,44 +63,45 @@ export default function DeckHeader({ id }: DeckHeaderProps) {
                      width={'80%'}
                      variant={'underlined'}
                      fontSize={25}
-                     value={name}
-                     onChangeText={(value) => setName(value)}
+                     value={updatedName}
+                     onChangeText={(value) => setUpdatedName(value)}
                      onBlur={handleInputBlur}
                      autoFocus
                   />
                ) : (
                   <Text fontSize={25} fontWeight="bold">
-                     Deck
+                     {cutText(name, 14)}
                   </Text>
                )}
             </Flex>
 
             <Flex direction="row" alignItems="center">
                <IconButton
-                  size={'sm'}
+                  size={'md'}
                   variant={'solid'}
-                  margin={2}
+                  borderRadius={10}
                   onPress={handleEdit}
                   icon={<MaterialIcons name="edit" size={25} color={'white'} />}
                   style={{ display: isEditing ? 'none' : 'flex' }}
                />
 
                <IconButton
-                  size={'sm'}
+                  size={'md'}
                   variant={'solid'}
+                  borderRadius={10}
                   colorScheme={'gray'}
-                  margin={2}
+                  marginRight={2}
                   onPress={() => setIsEditing(false)}
                   icon={<MaterialIcons name="undo" size={25} color={'white'} />}
                   style={{ display: isEditing ? 'flex' : 'none' }}
                />
 
                <IconButton
-                  size={'sm'}
+                  size={'md'}
                   variant={'solid'}
+                  borderRadius={10}
                   colorScheme={'green'}
-                  margin={2}
-                  onPress={handleUpdate}
+                  onPress={handleUpdateCategory}
                   icon={
                      <MaterialIcons name="check" size={25} color={'white'} />
                   }
@@ -94,4 +111,8 @@ export default function DeckHeader({ id }: DeckHeaderProps) {
          </Flex>
       </View>
    );
+}
+
+function cutText(text: string, length: number) {
+   return text.length > length ? text.slice(0, length) + '...' : text;
 }

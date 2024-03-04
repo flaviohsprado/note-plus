@@ -1,8 +1,8 @@
 import { DocumentPickerAsset, getDocumentAsync } from 'expo-document-picker';
 import { IDocumentPickerFile } from 'interfaces/file.interface';
+import { Avatar } from 'native-base';
 import { useCallback, useState } from 'react';
 import { Button, StatusBar, View } from 'react-native';
-import { Avatar } from 'react-native-paper';
 
 interface DocumentPickerProps {
    setValue: (fileResponse: IDocumentPickerFile) => void;
@@ -36,7 +36,7 @@ export default function DocumentPicker({ setValue }: DocumentPickerProps) {
          }}
       >
          <StatusBar barStyle={'dark-content'} />
-         <Avatar.Image
+         <Avatar
             key={fileResponse?.uri}
             size={150}
             source={{

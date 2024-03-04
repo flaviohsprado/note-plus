@@ -5,12 +5,10 @@ import { IDeck } from "interfaces/deck.interface"
 import { api } from "services/Axios"
 
 export const useFindOneDeck = (id: string) => {
-   const { data, isLoading } = useQuery<IDeck, AxiosError<ICustomError>>({
+   const { data, isLoading, refetch } = useQuery<IDeck, AxiosError<ICustomError>>({
       queryKey: ["deck"],
       queryFn: async () => {
          const { data: deckResponse } = await api.get<IDeck>(`/categories/${id}`)
-
-         console.log('deckResponse', deckResponse)
 
          return deckResponse
       },
@@ -22,5 +20,6 @@ export const useFindOneDeck = (id: string) => {
    return {
       deck: data,
       isLoading,
+      refetch,
    }
 }

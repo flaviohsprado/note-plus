@@ -1,10 +1,19 @@
 import { useNavigation } from '@react-navigation/native';
 import { useAuth } from 'hooks/authentication/useAuth';
 import { useGetUser } from 'hooks/user/useGetUser';
-import { Avatar } from 'native-base';
+import {
+   Avatar,
+   Box,
+   HStack,
+   HamburgerIcon,
+   IconButton,
+   Menu,
+   StatusBar,
+   Text,
+} from 'native-base';
 import { useState } from 'react';
-import { StyleSheet, View } from 'react-native';
-import { Appbar, Button, IconButton, Menu } from 'react-native-paper';
+import { StyleSheet } from 'react-native';
+import HeaderSkeleton from './skeleton';
 
 export default function Header() {
    const [visible, setVisible] = useState(false);
@@ -12,68 +21,66 @@ export default function Header() {
    const openMenu = () => setVisible(true);
    const closeMenu = () => setVisible(false);
 
-   const { user } = useGetUser();
+   const { user, isLoading } = useGetUser();
    const { logout } = useAuth();
 
    const title = `Olá ${user?.username}!`;
 
-   return (
-      <Appbar.Header
-         style={{
-            justifyContent: 'space-around',
-            backgroundColor: 'lightblue',
-            padding: 10,
-            marginLeft: 10,
-            marginRight: 10,
-         }}
-      >
-         <Appbar.Content title={title} />
-         <View style={styles.container}>
-            <Avatar
-               bg="cyan.500"
-               source={{
-                  uri: user?.file?.url,
-               }}
-               size="md"
-            >
-               {user?.username[0] || 'U'}
-            </Avatar>
-            <IconButton
-               icon="camera"
-               size={30}
-               style={styles.iconButton}
-               onPress={openMenu}
-            />
-            <Menu
-               visible={visible}
-               onDismiss={closeMenu}
-               anchor={
-                  <Button
-                     style={{
-                        //hide button
-                        backgroundColor: 'transparent',
-                        opacity: 0,
-                        zIndex: -99,
-                     }}
+   console.log('DeckHeader - Loading', isLoading);
+
+   return isLoading ? (
+      <HeaderSkeleton />
+   ) : (
+      <>
+         <StatusBar backgroundColor="black" barStyle="light-content" />
+         <Box safeAreaTop bg="black" />
+         <HStack
+            bg="black"
+            px="1"
+            py="3"
+            justifyContent="space-between"
+            alignItems="center"
+            w="100%"
+         >
+            <Text padding={2} color="white" fontSize="25" fontWeight="bold">
+               {title}
+            </Text>
+            <HStack padding={2}>
+               <Avatar
+                  bg="cyan.500"
+                  source={{
+                     uri: user?.file?.url,
+                  }}
+                  size="md"
+               >
+                  {user?.username[0] || 'U'}
+               </Avatar>
+               <Menu
+                  w="190"
+                  backgroundColor={'blue.100'}
+                  trigger={(triggerProps) => {
+                     return (
+                        <IconButton
+                           icon={<HamburgerIcon />}
+                           {...triggerProps}
+                           style={styles.iconButton}
+                        />
+                     );
+                  }}
+                  isOpen={visible}
+                  onOpen={openMenu}
+                  onClose={closeMenu}
+               >
+                  <Menu.Item
+                  //onPress={() => navigation.navigate('Profile')}
                   >
-                     Show menu
-                  </Button>
-               }
-            >
-               <Menu.Item
-                  leadingIcon={'account-circle'}
-                  //@ts-ignore
-                  onPress={() => navigation.navigate('Profile')}
-                  title="Profile"
-               />
-               <Menu.Item
-                  leadingIcon={'logout'}
-                  onPress={logout}
-                  title="Logout"
-               />
-            </Menu>
-         </View>
-      </Appbar.Header>
+                     Profile
+                  </Menu.Item>
+                  <Menu.Item onPress={logout}>Logout</Menu.Item>
+               </Menu>
+            </HStack>
+         </HStack>
+      </>
    );
 }
 
