@@ -16,8 +16,6 @@ export default function CreateDeck({
 }: CreateDeckProps) {
    const { name, setName, setParentId, handleSubmit } = useCreateDeck();
 
-   console.log('parentId', parentId);
-
    const handleModalSubmit = () => {
       setParentId(parentId || '');
       handleSubmit();

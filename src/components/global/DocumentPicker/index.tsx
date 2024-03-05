@@ -1,8 +1,9 @@
+import { MaterialIcons } from '@expo/vector-icons';
 import { DocumentPickerAsset, getDocumentAsync } from 'expo-document-picker';
 import { IDocumentPickerFile } from 'interfaces/file.interface';
-import { Avatar } from 'native-base';
+import { Avatar, Icon, IconButton } from 'native-base';
 import { useCallback, useState } from 'react';
-import { Button, StatusBar, View } from 'react-native';
+import { StatusBar, View } from 'react-native';
 
 interface DocumentPickerProps {
    setValue: (fileResponse: IDocumentPickerFile) => void;
@@ -43,7 +44,22 @@ export default function DocumentPicker({ setValue }: DocumentPickerProps) {
                uri: fileResponse?.uri,
             }}
          />
-         <Button title="Select 📑" onPress={handleDocumentSelection} />
+         <IconButton
+            style={{
+               backgroundColor: 'grey',
+               borderRadius: 5,
+               top: -30,
+               right: -50,
+            }}
+            icon={
+               <Icon
+                  as={<MaterialIcons name={'add-a-photo'} />}
+                  size={'md'}
+                  color={'white'}
+               />
+            }
+            onPress={handleDocumentSelection}
+         />
       </View>
    );
 }

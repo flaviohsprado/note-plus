@@ -1,4 +1,4 @@
-import DocumentPicker from 'components/global/DocumentPicker';
+import ImagePick from 'components/global/ImagePicker';
 import InputEmail from 'components/global/InputEmail';
 import InputPasswordTest from 'components/global/InputPassword';
 import InputText from 'components/global/InputText';
@@ -29,7 +29,7 @@ export default function SignupScreen({ navigation }: SignupProps): ReactNode {
    return (
       <SafeContainer>
          <VStack padding={5} space={4} mt="5">
-            <DocumentPicker setValue={setFile} />
+            <ImagePick setValue={setFile} />
             <InputText
                label={'Username'}
                placeholder={'Type your username'}

@@ -1,4 +1,5 @@
 import { MaterialIcons } from '@expo/vector-icons';
+import { useNavigation } from '@react-navigation/native';
 import { useUpdateDeck } from 'hooks/deck/useUpdateDeck';
 import { Flex, IconButton, Input, Text, View } from 'native-base';
 import { useState } from 'react';
@@ -6,6 +7,7 @@ import DeckHeaderSkeleton from './skeleton';
 
 interface DeckHeaderProps {
    id: string;
+   parentId?: string;
    parentName: string;
    name: string;
    isLoading?: boolean;
@@ -16,9 +18,11 @@ export default function DeckHeader({
    name,
    parentName,
    isLoading,
+   parentId,
 }: DeckHeaderProps) {
    const { updatedName, setUpdatedName, handleUpdate } = useUpdateDeck(id);
    const [isEditing, setIsEditing] = useState(false);
+   const navigation = useNavigation();
 
    const handleEdit = () => {
       setIsEditing(true);
@@ -31,6 +35,15 @@ export default function DeckHeader({
    const handleUpdateCategory = () => {
       handleUpdate();
       setIsEditing(false);
+   };
+
+   const handleGoBack = () => {
+      if (parentId) {
+         navigation.navigate('DeckScreen', {
+            id: parentId,
+            parentName: '',
+         });
+      }
    };
 
    return isLoading ? (
@@ -48,6 +61,7 @@ export default function DeckHeader({
                   fontFamily={'heading'}
                   fontWeight="600"
                   fontStyle={'normal'}
+                  onPress={handleGoBack}
                >
                   {parentName.length > 0 && `${parentName} `}
                </Text>

@@ -5,8 +5,6 @@ import { INote } from "interfaces/note.interface"
 import { api } from "services/Axios"
 
 export const useFindAllNotesFromCategory = (categoryId: string) => {
-   if (!categoryId) console.error('categoryId is required')
-
    const { data, isLoading, refetch, error } = useQuery<INote[], AxiosError<ICustomError>>({
       queryKey: ["notes"],
       queryFn: async () => {

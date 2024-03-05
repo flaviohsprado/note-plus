@@ -6,14 +6,42 @@ import { IDeck } from "interfaces/deck.interface";
 import { useState } from "react";
 import { api } from "services/Axios";
 
-export const useCreateNote = (categoryId: string) => {
+export const useCreateOrUpdateNote = (id?: String, categoryId?: string) => {
    const { showToast } = useCustomToast();
    const queryClient = useQueryClient();
 
    const [title, setTitle] = useState('');
    const [content, setContent] = useState('');
 
-   const { mutate } = useMutation<IDeck, AxiosError<ICustomError>>({
+   const { mutate: mutateUpdate } = useMutation<IDeck, AxiosError<ICustomError>>({
+      mutationFn: async () => {
+         const { data } = await api.put<IDeck>(`/notes/${id}`, { title, content });
+
+         return data;
+      },
+      onSuccess: (data) => {
+         setTitle('');
+         setContent('');
+
+         showToast({
+            title: "Note updated",
+            description: "Your note has been updated",
+            status: "success",
+         });
+
+         queryClient.refetchQueries({ queryKey: ['notes'] });
+      },
+      onError: (error) => {
+         console.error(error.response?.data?.message);
+         showToast({
+            title: "Something went wrong",
+            description: String(error.response?.data?.message),
+            status: "error",
+         });
+      },
+   });
+
+   const { mutate: mutateCreate } = useMutation<IDeck, AxiosError<ICustomError>>({
       mutationFn: async () => {
          const { data } = await api.post<IDeck>('/notes', { categoryId, title, content });
 
@@ -29,7 +57,7 @@ export const useCreateNote = (categoryId: string) => {
             status: "success",
          });
 
-         queryClient.refetchQueries({ queryKey: ['deck'] });
+         queryClient.refetchQueries({ queryKey: ['notes'] });
       },
       onError: (error) => {
          console.error(error.response?.data?.message);
@@ -42,9 +70,6 @@ export const useCreateNote = (categoryId: string) => {
    });
 
    const handleSubmit = () => {
-      console.log('title', title);
-      console.log('content', content);
-
       if (!title || !content) {
          showToast({
             title: "Something went wrong",
@@ -55,7 +80,7 @@ export const useCreateNote = (categoryId: string) => {
          return;
       }
 
-      mutate();
+      id ? mutateUpdate() : mutateCreate();
    };
 
    return {

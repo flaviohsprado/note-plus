@@ -14,6 +14,7 @@ export default function DeckScreen({ route }: any) {
    const { deck, isLoading, refetch } = useFindOneDeck(id);
    const [visible, setVisible] = useState(false);
    const [inSelectionMode, setInSelectionMode] = useState(false);
+
    const handleCreateNote = () => {
       navigation.navigate('NoteScreen', {
          categoryId: id,

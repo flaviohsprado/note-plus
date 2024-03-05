@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 import { ICustomError } from 'interfaces/customError.interface';
-import { IDocumentPickerFile } from 'interfaces/file.interface';
+import { IImagePickerAsset } from 'interfaces/file.interface';
 import { IUserSignupResponse } from 'interfaces/user.interface';
 import { useToast } from 'native-base';
 import { useState } from 'react';
@@ -16,7 +16,7 @@ export const useSignup = () => {
    const [password, setPassword] = useState('');
    const [confirmPassword, setConfirmPassword] = useState('');
    const [email, setEmail] = useState('');
-   const [file, setFile] = useState<IDocumentPickerFile>();
+   const [file, setFile] = useState<IImagePickerAsset>();
 
    const { mutate } = useMutation<IUserSignupResponse, AxiosError<ICustomError>>({
       mutationFn: async () => {
@@ -25,7 +25,7 @@ export const useSignup = () => {
          if (file)
             formData.append('file', {
                uri: file?.uri,
-               name: file?.name,
+               name: file?.fileName || 'image.jpg',
                type: file?.mimeType,
             });
 

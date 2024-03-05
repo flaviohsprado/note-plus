@@ -1,5 +1,5 @@
-import { useQueryClient } from '@tanstack/react-query';
 import ItemList from 'components/Note/Item';
+import NoteListSkeleton from 'components/Note/List/skeleton';
 import { useFindAllNotes } from 'hooks/note/useFindAllNotes';
 import { FlatList } from 'native-base';
 import { useState } from 'react';
@@ -11,15 +11,17 @@ interface DashboardProps {
 export default function HomeScreen({ navigation }: DashboardProps) {
    const { notes, isLoading, refetch } = useFindAllNotes();
    const [refreshing, setRefreshing] = useState(false);
-   const queryClient = useQueryClient();
+   //const queryClient = useQueryClient();
 
    const onRefresh = () => {
       setRefreshing(true);
-      queryClient.refetchQueries({ queryKey: ['notes'] });
+      refetch();
       setRefreshing(false);
    };
 
-   return (
+   return isLoading ? (
+      <NoteListSkeleton />
+   ) : (
       <FlatList
          height={'75%'}
          refreshing={refreshing}

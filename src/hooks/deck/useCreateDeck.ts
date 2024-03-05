@@ -32,6 +32,7 @@ export const useCreateDeck = () => {
          });
 
          queryClient.refetchQueries({ queryKey: ['decks'] });
+         queryClient.refetchQueries({ queryKey: ['deck'] });
       },
       onError: (error) => {
          toaster.show({

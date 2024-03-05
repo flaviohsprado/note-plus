@@ -7,6 +7,7 @@ interface IFABStackButtonsProps {
    text: string;
    handleSubmit: () => void;
 }
+
 export default function FABStackButtons({
    text,
    handleSubmit,
@@ -27,24 +28,13 @@ export default function FABStackButtons({
          <Fab
             renderInPortal={false}
             shadow={2}
-            size="sm"
+            size="md"
             icon={
-               <Icon color="white" as={MaterialIcons} name="check" size="4" />
+               <Icon color="white" as={MaterialIcons} name="check" size="6" />
             }
             onPress={handleTextChange}
             colorScheme={'emerald'}
-            bottom={400}
-         />
-         <Fab
-            renderInPortal={false}
-            shadow={2}
-            size="sm"
-            icon={
-               <Icon color="white" as={MaterialIcons} name="clear" size="4" />
-            }
-            onPress={handleEraseText}
-            colorScheme={'red'}
-            bottom={340}
+            bottom={200}
          />
          <Fab
             renderInPortal={false}
@@ -55,12 +45,12 @@ export default function FABStackButtons({
                   color="white"
                   as={MaterialIcons}
                   name="arrow-back"
-                  size="4"
+                  size="6"
                />
             }
             onPress={navigation.goBack}
             colorScheme={'gray'}
-            bottom={280}
+            bottom={140}
          />
       </>
    );

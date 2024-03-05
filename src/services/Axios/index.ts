@@ -10,7 +10,7 @@ interface IResponseParams {
 }
 
 export const api = axios.create({
-    baseURL: 'https://c82b-138-117-164-212.ngrok-free.app/',
+    baseURL: 'https://note-plus-api.onrender.com/',
     headers: {
         'Content-Type': 'application/json',
         'Access-Control-Allow-Origin': '*',
