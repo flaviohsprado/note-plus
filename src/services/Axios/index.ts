@@ -2,7 +2,7 @@ import axios from 'axios';
 import StorageUtils from 'utils/storage.utils';
 
 export const api = axios.create({
-    baseURL: 'https://0676-138-117-165-251.ngrok-free.app/',
+    baseURL: 'https://note-plus-api.onrender.com/',
     headers: {
         'Content-Type': 'application/json',
         'Access-Control-Allow-Origin': '*',
