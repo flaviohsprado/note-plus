@@ -1,6 +1,6 @@
 import SigninBottom from 'components/Authentication/SigninBottom';
 import SignInHeader from 'components/Authentication/SigninHeader';
-import InputPasswordTest from 'components/global/InputPassword';
+import InputPassword from 'components/global/InputPassword';
 import InputText from 'components/global/InputText';
 import SafeContainer from 'components/global/SafeContainer';
 import SubmitButton from 'components/global/SubmitButton';
@@ -12,7 +12,7 @@ interface SignInProps {
    navigation: INavigation;
 }
 
-export default function SignIn({ navigation }: SignInProps) {
+export default function SignInScreen({ navigation }: SignInProps) {
    const { login } = useAuth();
    const [password, setPassword] = useState('');
    const [email, setEmail] = useState('');
@@ -27,19 +27,19 @@ export default function SignIn({ navigation }: SignInProps) {
          <VStack padding={5} space={4} mt="5">
             <InputText
                label={'Email'}
-               placeholder={'Type your email'}
+               placeholder={'Digite seu email'}
                value={email}
                setValue={setEmail}
                isRequired={true}
             />
-            <InputPasswordTest
-               label={'password'}
-               placeholder={'Type your password'}
+            <InputPassword
+               label={'Senha'}
+               placeholder={'Digite sua senha'}
                value={password}
                setValue={setPassword}
                isRequired={true}
             />
-            <SubmitButton label={'Sign in'} onPress={handleSignUp} />
+            <SubmitButton label={'Entrar'} onPress={handleSignUp} />
             <SigninBottom />
          </VStack>
       </SafeContainer>

@@ -1,6 +1,7 @@
+import SignUpBottom from 'components/Authentication/SignUpBottom';
 import ImagePick from 'components/global/ImagePicker';
 import InputEmail from 'components/global/InputEmail';
-import InputPasswordTest from 'components/global/InputPassword';
+import InputPassword from 'components/global/InputPassword';
 import InputText from 'components/global/InputText';
 import SafeContainer from 'components/global/SafeContainer';
 import SubmitButton from 'components/global/SubmitButton';
@@ -28,7 +29,7 @@ export default function SignupScreen({ navigation }: SignupProps): ReactNode {
 
    return (
       <SafeContainer>
-         <VStack padding={5} space={4} mt="5">
+         <VStack padding={4} space={4} mt="2">
             <ImagePick setValue={setFile} />
             <InputText
                label={'Username'}
@@ -42,19 +43,20 @@ export default function SignupScreen({ navigation }: SignupProps): ReactNode {
                setValue={setEmail}
                value={email}
             />
-            <InputPasswordTest
+            <InputPassword
                label={'Password'}
                placeholder={'Type your password'}
                setValue={setPassword}
                value={password}
             />
-            <InputPasswordTest
+            <InputPassword
                label={'Confirm'}
                placeholder={'confirm your password'}
                setValue={setConfirmPassword}
                value={confirmPassword}
             />
             <SubmitButton label={'Sign up'} onPress={handleSubmit} />
+            <SignUpBottom />
          </VStack>
       </SafeContainer>
    );

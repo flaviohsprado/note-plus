@@ -10,9 +10,15 @@ import { useState } from 'react';
 
 interface ImagePickerProps {
    setValue: (fileResponse: IImagePickerAsset) => void;
+   uri?: string;
+   enableEdit?: boolean;
 }
 
-export default function ImagePick({ setValue }: ImagePickerProps) {
+export default function ImagePick({
+   setValue,
+   uri,
+   enableEdit = true,
+}: ImagePickerProps) {
    const [fileResponse, setFileResponse] = useState<ImagePickerAsset>();
 
    const pickImage = async () => {
@@ -23,8 +29,6 @@ export default function ImagePick({ setValue }: ImagePickerProps) {
          aspect: [4, 3],
          quality: 1,
       });
-
-      console.log(result);
 
       if (!result.canceled) {
          setFileResponse(result.assets[0]);
@@ -45,20 +49,22 @@ export default function ImagePick({ setValue }: ImagePickerProps) {
             key={fileResponse?.uri}
             size={150}
             source={{
-               uri: fileResponse?.uri,
+               uri: fileResponse?.uri || uri,
             }}
          />
          <IconButton
             style={{
                backgroundColor: 'grey',
-               borderRadius: 5,
-               top: -30,
-               right: -50,
+               borderRadius: 50,
+               position: 'absolute',
+               bottom: 0,
+               right: 60,
+               display: enableEdit ? 'flex' : 'none',
             }}
             icon={
                <Icon
                   as={<MaterialIcons name={'add-a-photo'} />}
-                  size={'md'}
+                  size={'lg'}
                   color={'white'}
                />
             }

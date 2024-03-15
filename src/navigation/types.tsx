@@ -6,6 +6,8 @@ import type {
 } from '@react-navigation/native';
 
 export type RootStackParamList = {
+   SignUp: undefined;
+   SignIn: undefined;
    Home: NavigatorScreenParams<HomeTabParamList>;
    DeckScreen: { id: string; parentName: string };
    NoteScreen: {
@@ -14,6 +16,7 @@ export type RootStackParamList = {
       title: string;
       content: string;
    };
+   ProfileScreen: undefined;
 };
 
 export type RootMaterialBottomTabScreenProps<

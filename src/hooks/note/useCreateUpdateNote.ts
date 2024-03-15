@@ -32,7 +32,6 @@ export const useCreateOrUpdateNote = (id?: String, categoryId?: string) => {
          queryClient.refetchQueries({ queryKey: ['notes'] });
       },
       onError: (error) => {
-         console.error(error.response?.data?.message);
          showToast({
             title: "Something went wrong",
             description: String(error.response?.data?.message),

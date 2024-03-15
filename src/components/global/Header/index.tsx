@@ -1,5 +1,4 @@
 import { useNavigation } from '@react-navigation/native';
-import { useAuth } from 'hooks/authentication/useAuth';
 import { useGetUser } from 'hooks/user/useGetUser';
 import {
    Avatar,
@@ -7,30 +6,18 @@ import {
    HStack,
    HamburgerIcon,
    IconButton,
-   Menu,
    StatusBar,
    Text,
 } from 'native-base';
-import { useState } from 'react';
 import { StyleSheet } from 'react-native';
-import HeaderSkeleton from './skeleton';
 
 export default function Header() {
-   const [visible, setVisible] = useState(false);
    const navigation = useNavigation();
-   const openMenu = () => setVisible(true);
-   const closeMenu = () => setVisible(false);
-
-   const { user, isLoading } = useGetUser();
-   const { logout } = useAuth();
+   const { user } = useGetUser();
 
    const title = `Olá ${user?.username}!`;
 
-   console.log('DeckHeader - Loading', isLoading);
-
-   return isLoading ? (
-      <HeaderSkeleton />
-   ) : (
+   return (
       <>
          <StatusBar backgroundColor="black" barStyle="light-content" />
          <Box safeAreaTop bg="black" />
@@ -55,29 +42,15 @@ export default function Header() {
                >
                   {user?.username[0] || 'U'}
                </Avatar>
-               <Menu
-                  w="190"
-                  backgroundColor={'blue.100'}
-                  trigger={(triggerProps) => {
-                     return (
-                        <IconButton
-                           icon={<HamburgerIcon />}
-                           {...triggerProps}
-                           style={styles.iconButton}
-                        />
-                     );
-                  }}
-                  isOpen={visible}
-                  onOpen={openMenu}
-                  onClose={closeMenu}
-               >
-                  <Menu.Item
-                  //onPress={() => navigation.navigate('Profile')}
-                  >
-                     Profile
-                  </Menu.Item>
-                  <Menu.Item onPress={logout}>Logout</Menu.Item>
-               </Menu>
+               <IconButton
+                  icon={<HamburgerIcon />}
+                  style={styles.iconButton}
+                  onPress={() => navigation.navigate('ProfileScreen')}
+                  color="white"
+                  width={'12'}
+                  height={'12'}
+                  borderRadius={50}
+               />
             </HStack>
          </HStack>
       </>
@@ -93,9 +66,8 @@ const styles = StyleSheet.create({
    iconButton: {
       position: 'absolute',
       bottom: 0,
-      right: -4,
-      top: -4,
-      backgroundColor: 'transparent',
+      right: 8,
+      top: 8,
       opacity: 0,
    },
 });

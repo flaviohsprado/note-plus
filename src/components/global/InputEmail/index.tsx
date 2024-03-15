@@ -32,7 +32,7 @@ export default function InputEmail({
       <FormControl isRequired={isRequired} isInvalid={!isValid}>
          <FormControl.Label
             _text={{
-               fontSize: 'lg',
+               fontSize: 'md',
                color: 'coolGray.800',
             }}
          >
@@ -45,7 +45,9 @@ export default function InputEmail({
             onChangeText={handleTextChange}
             onEndEditing={() => setValue(value)}
             variant={'rounded'}
-            size={'2xl'}
+            size={'sm'}
+            fontSize={'md'}
+            autoCapitalize="none"
          />
          {!isValid && (
             <FormControl.ErrorMessage

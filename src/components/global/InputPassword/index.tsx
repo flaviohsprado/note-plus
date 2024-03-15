@@ -10,7 +10,7 @@ interface InputPasswordProps {
    isRequired?: boolean;
 }
 
-export default function InputPasswordTest({
+export default function InputPassword({
    label,
    placeholder,
    value,
@@ -23,7 +23,7 @@ export default function InputPasswordTest({
       <FormControl isRequired={isRequired}>
          <FormControl.Label
             _text={{
-               fontSize: 'lg',
+               fontSize: 'md',
                color: 'coolGray.800',
             }}
          >
@@ -35,7 +35,8 @@ export default function InputPasswordTest({
             value={value}
             onChangeText={(text) => setValue(String(text))}
             variant={'rounded'}
-            size={'2xl'}
+            size={'sm'}
+            fontSize={'md'}
             InputRightElement={
                <Pressable onPress={() => setShow(!show)}>
                   <Icon
@@ -44,7 +45,7 @@ export default function InputPasswordTest({
                            name={show ? 'visibility' : 'visibility-off'}
                         />
                      }
-                     size={8}
+                     size={'md'}
                      mr="2"
                      color="muted.400"
                   />

@@ -25,6 +25,7 @@ export default function NoteScreen({ route }: any) {
 
    const handleSubmit = () => {
       handleCreateOrUpdateNote();
+
       Keyboard.dismiss();
       navigation.goBack();
    };

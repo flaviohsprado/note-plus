@@ -13,11 +13,14 @@ export default function NoteHeader({ title, setTitle }: INoteHeaderProps) {
             spellCheck
             value={title}
             onChangeText={(text) => setTitle(text)}
-            placeholder={'Your title here...'}
+            placeholder={'Seu título aqui...'}
             style={{
                width: '100%',
                height: '100%',
-               padding: 20,
+               paddingBottom: 20,
+               paddingTop: 20,
+               paddingRight: 20,
+               paddingLeft: 10,
                fontSize: 30,
                fontWeight: 'bold',
                textAlignVertical: 'top',

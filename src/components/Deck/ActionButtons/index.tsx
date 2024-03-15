@@ -20,8 +20,6 @@ export default function ActionButtons({
    const handleConfirmDelete = () => {
       setIsOpen(true);
 
-      console.log('cancelRef', cancelRef);
-
       if (cancelRef.current) handleDelete();
    };
 

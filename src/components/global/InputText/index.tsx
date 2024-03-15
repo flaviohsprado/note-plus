@@ -19,7 +19,7 @@ export default function InputText({
       <FormControl isRequired={isRequired}>
          <FormControl.Label
             _text={{
-               fontSize: 'lg',
+               fontSize: 'md',
                color: 'coolGray.800',
             }}
          >
@@ -30,7 +30,10 @@ export default function InputText({
             value={value}
             onChangeText={(text) => setValue(text)}
             variant={'rounded'}
-            size={'2xl'}
+            size={'sm'}
+            fontSize={'md'}
+            //starts the input with a capital letter
+            autoCapitalize="words"
          />
       </FormControl>
    );

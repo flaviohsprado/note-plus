@@ -16,7 +16,7 @@ export default function NoteContent({
          <LinedInput
             value={content}
             onChangeText={(text) => setContent(text)}
-            placeholder={'Type here...'}
+            placeholder={'Aqui vai o conteúdo da sua anotação...'}
          />
       </Box>
    );

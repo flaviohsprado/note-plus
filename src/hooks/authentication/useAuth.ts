@@ -35,9 +35,9 @@ export const useAuth = () => {
 
          setUser({
             id: data.id,
-            name: data.username,
+            username: data.username,
             email: data.email,
-            avatar: data.file.url,
+            file: data.file,
          });
       },
       onError: (error) => {
@@ -57,7 +57,7 @@ export const useAuth = () => {
          StorageUtils.remove('accessToken');
          queryClient.clear();
          queryClient.setQueryData(['user'], null);
-         setUser(null);
+         setUser(undefined);
       },
    };
 };

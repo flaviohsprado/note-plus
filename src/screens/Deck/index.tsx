@@ -18,7 +18,7 @@ export default function DeckScreen({ route }: any) {
    const handleCreateNote = () => {
       navigation.navigate('NoteScreen', {
          categoryId: id,
-         title: 'New note',
+         title: 'Nova anotação',
          content: '',
       });
    };

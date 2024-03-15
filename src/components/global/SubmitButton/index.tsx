@@ -12,10 +12,10 @@ export default function SubmitButton({ label, onPress }: SubmitButtonProps) {
          onPress={onPress}
          borderRadius={50}
          width={'100%'}
-         marginTop={5}
-         size={'lg'}
+         marginTop={3}
+         size={'md'}
          _text={{
-            fontSize: 'lg',
+            fontSize: 'md',
          }}
       >
          {label}

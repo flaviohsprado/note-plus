@@ -42,9 +42,6 @@ export const useCreateNote = (categoryId: string) => {
    });
 
    const handleSubmit = () => {
-      console.log('title', title);
-      console.log('content', content);
-
       if (!title || !content) {
          showToast({
             title: "Something went wrong",

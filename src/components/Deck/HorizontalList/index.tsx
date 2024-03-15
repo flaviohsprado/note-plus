@@ -66,7 +66,7 @@ export default function HorizontalCategoryList({
       <HorizontalDeckListSkeleton />
    ) : decks.length === 0 ? (
       <Box flex={1} justifyContent="center" alignItems="center">
-         <Text>No decks found, create one for this category</Text>
+         <Text>Nenhuma categoria, crie a primeira!</Text>
       </Box>
    ) : (
       <>

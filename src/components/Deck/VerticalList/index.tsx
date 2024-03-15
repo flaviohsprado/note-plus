@@ -59,7 +59,6 @@ export default function VerticalDeckList({
             }
          });
       } else {
-         console.log('VerticalDeckList', id);
          navigation.navigate('DeckScreen', { id, parentName: '' });
       }
    };

@@ -38,13 +38,13 @@ export default function CreateDeck({
       >
          <Center width={'100%'} padding={10}>
             <InputText
-               label={'Name'}
-               placeholder={'Type your deck name'}
+               label={'Nome'}
+               placeholder={'Digite o nome da categoria'}
                setValue={setName}
                value={name}
                isRequired={true}
             />
-            <SubmitButton label={'Create'} onPress={handleModalSubmit} />
+            <SubmitButton label={'Criar!'} onPress={handleModalSubmit} />
          </Center>
       </Modal>
    );
